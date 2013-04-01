@@ -1,5 +1,29 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  p The parliamentary election is coming up on Thursday!
+  form(method="POST"
+    action="/vote"
+    enctype="application/x-www-form-urlencoded")
+    p Are you going to vote?
+    input(type="radio"
+      name="voting"
+      value="yes"
+      required)
+    |Yes
+    br
+    input(type="radio"
+      name="voting"
+      value="no"
+      required)
+    |No
+
+    p Which constituency do you vote in?
+    select(name="constituency")
+      each constituency in constituencies
+        if constituency
+          include constituency
+
+    p
+    input(type="submit")
+
