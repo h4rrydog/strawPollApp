@@ -93,6 +93,8 @@ exports.vote = function (req, res) {
     var voting = req.body.voting,
         constituency = req.body.constituency;
 
+    var candidates = pollData[constituency]['candidates'];
+
     console.log('User is voting? ' + voting);
     console.log('User is in constituency ' + constituency);
 
@@ -106,7 +108,7 @@ exports.vote = function (req, res) {
     if (voting === 'yes') {
 
         // setup candidates array for voting form
-        var candidates = pollData[constituency]['candidates'];
+
         console.log(candidates.length + ' candidates in constituency ' + constituency);
 
         res.render('poll', {
@@ -118,7 +120,11 @@ exports.vote = function (req, res) {
     } else {
         res.render('results', {
             title: 'MySociety Straw Poll - poll results',
-            constituency: constituency
+            constituency: constituency,
+            candidates: candidates,
+            nationalPoll: nationalPoll,
+            regionalChartData: processRegionalData(candidates),
+            nationalChartData: processNationalData(nationalPoll)
         });
     }
 };
