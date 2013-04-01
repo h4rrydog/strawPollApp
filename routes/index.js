@@ -124,8 +124,77 @@ exports.vote = function (req, res) {
 };
 
 exports.results = function (req, res) {
+    var constituency = req.body.constituency,
+        vote = req.body.vote;
+
+    console.log('User in constituency ' + constituency + ' is voting for ' + vote + '.');
+
+    // tally vote in data store
+    var candidates = pollData[constituency]['candidates'];
+
+    for (var i = 0; i < candidates.length; i += 1) {
+        if (candidates[i].name === vote) {
+            var party = candidates[i].party;
+
+            pollData[constituency]['candidates'][i].votes += 1;
+            nationalPoll[party] += 1;
+            break;
+        }
+    }
+
+    console.log(JSON.stringify(pollData));
+    console.log(JSON.stringify(nationalPoll));
 
     res.render('results', {
-        title: 'MySociety Straw Poll - poll results'
+        title: 'MySociety Straw Poll - poll results',
+        constituency: constituency,
+        candidates: candidates,
+        nationalPoll: nationalPoll,
+        regionalChartData: processRegionalData(candidates),
+        nationalChartData: processNationalData(nationalPoll)
     });
 };
+
+var partyColours = {
+    puppies: "#ff4444",
+    kittens: "#33b5e5",
+    bunnies: "#ffbb33",
+    independent: "#99cc00"
+};
+
+var processRegionalData = function (regionalPollData) {
+    console.log("processRegionalData: " + JSON.stringify(regionalPollData));
+
+    var chartData = [];
+    for (var i = 0; i < regionalPollData.length; i += 1) {
+       var temp = {};
+        if (regionalPollData[i].votes !== 0) {
+            temp.value = regionalPollData[i].votes;
+            temp.color = partyColours[regionalPollData[i].party];
+            chartData.push(temp);
+        }
+    }
+
+    console.log(JSON.stringify(chartData));
+
+    return chartData;
+};
+
+var processNationalData = function (nationalPollData) {
+    console.log("processNationalData: " + JSON.stringify(nationalPollData));
+
+    var chartData = [];
+    for (key in nationalPollData) {
+        var temp = {};
+        if (nationalPollData[key] !== 0) {
+            temp.value = nationalPollData[key];
+            temp.color = partyColours[key];
+            chartData.push(temp);
+        }
+    }
+
+    console.log(JSON.stringify(chartData));
+
+    return chartData;
+};
+

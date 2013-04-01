@@ -6,3 +6,69 @@ body {
 a {
   color: #00B7FF;
 }
+
+form {
+    border: solid #666666 2px;
+    border-radius: 10px;
+    background-color: #eeeeee;
+    padding: 20px;
+}
+
+.organisation {
+    font-size: 1.5em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.title {
+    font-size: 4em;
+    line-height: 1em;
+    margin-top: 0;
+}
+
+.chartLabel {
+    text-align: center;
+}
+
+.puppies {
+    color: #ff4444;
+}
+
+.kittens {
+    color: #33b5e5;
+}
+
+.bunnies {
+    color: #ffbb33;
+}
+
+.independent {
+    color: #99cc00;
+}
+
+.plea {
+    clear: both;
+    margin-top: 20px;
+    line-height: 3em;
+}
+
+#constituency {
+    display: box;
+    float: left;
+    border: solid #666666 2px;
+    border-radius: 10px;
+    background-color: #eeeeee;
+    padding: 20px;
+    margin-right: 20px;
+    min-width: 200px;
+}
+
+#national {
+    display: box;
+    float: left;
+    border: solid #666666 2px;
+    border-radius: 10px;
+    background-color: #eeeeee;
+    padding: 20px;
+    min-width: 200px;
+}

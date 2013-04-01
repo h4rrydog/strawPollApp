@@ -1,4 +1,32 @@
 extends layout
 
 block content
-  p results page
+  p Thank you for participating in the MySociety straw poll!
+  p Here are the results of our informal poll:
+
+  div#constituency
+    h3 Parliamentary Constituency
+    canvas#chartConstituency(width=200,
+      height=200)
+    ul
+      each candidate in candidates
+        li(class="#{candidate.party}") #{candidate.name}: #{candidate.votes} votes(s)
+
+  div#national
+    h3.chartLabel National
+    canvas#chartNational(width=200,
+      height=200)
+    ul
+      each value, key in nationalPoll
+        li(class="#{key}") #{key}: #{value} vote(s)
+
+  p.plea Please ask your friends to vote! Our democracy depends on all of our participation.
+
+   script(src="javascripts/Chart.js")
+   script(type="text/javascript")
+    var dataRegional = !{JSON.stringify(regionalChartData)};
+    var dataNational = !{JSON.stringify(nationalChartData)};
+    var ctxRegional = document.getElementById("chartConstituency").getContext("2d");
+    var ctxNational = document.getElementById("chartNational").getContext("2d");
+    var chartRegional = new Chart(ctxRegional).Doughnut(dataRegional);
+    var chartNational = new Chart(ctxNational).Doughnut(dataNational);
