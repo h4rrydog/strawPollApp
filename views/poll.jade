@@ -1,4 +1,20 @@
 extends layout
 
 block content
-  p poll form
+  form(method="POST"
+    action="/results"
+    enctype="application/x-www-form-urlencoded'
+    required)
+    p Who will you vote for?
+    each candidate in candidates
+      if candidate
+        include candidate
+
+    input(type="hidden"
+      name="constituency"
+      value="#{constituency}")
+
+    p
+    input(type="submit"
+      value="Next >")
+

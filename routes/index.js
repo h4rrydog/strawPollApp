@@ -123,3 +123,9 @@ exports.vote = function (req, res) {
     }
 };
 
+exports.results = function (req, res) {
+
+    res.render('results', {
+        title: 'MySociety Straw Poll - poll results'
+    });
+};
